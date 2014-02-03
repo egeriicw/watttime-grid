@@ -81,12 +81,14 @@ def load(yr, st):
                 
             # csv -> dataframe
             try:
-                pieces.append(pd.read_csv(csvfname, usecols=[0,1,3,4,5,6,7,17,18]))
+                pieces.append(pd.read_csv(csvfname))
             except:
                 print '... skipping %s' % mo
             
         # combine into one big dataframe
-        data[yr][st] = pd.concat(pieces)
+        df = pd.concat(pieces)
+        df['OP_DATE'] = pd.to_datetime(df['OP_DATE'])
+        data[yr][st] = df
     
 def get_unit_group(yr, st):
     """group by facility name and unit id"""

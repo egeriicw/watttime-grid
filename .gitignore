@@ -1,5 +1,7 @@
 *.csv
 *.py[cod]
+*.db
+*~
 
 # C extensions
 *.so
@@ -35,4 +37,3 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
->>>>>>> e48020425943ae19b0d2ad134ec72503d0cdb095
