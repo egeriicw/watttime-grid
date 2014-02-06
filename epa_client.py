@@ -87,8 +87,37 @@ def load(yr, st):
             
         # combine into one big dataframe
         df = pd.concat(pieces)
-        df['OP_DATE'] = pd.to_datetime(df['OP_DATE'])
+      #  df['OP_DATE'] = pd.to_datetime(df['OP_DATE'])
         data[yr][st] = df
+        
+def agg_by_ba(st, yr, facility_df):
+    # load data
+    load(yr, st)
+    
+    # filter facilities by this state
+    facilities_in_st_df = facility_df[facility_df['State']==st.upper()]
+    
+    # set up storage
+    to_return = {st: {}}
+    
+    # loop over BAs
+    for ba in facilities_in_st_df["BA_ABBREV"].unique():        
+        # get ORISPL codes for all facilities in this state and this BA
+        facilities_in_ba_df = facilities_in_st_df[facilities_in_st_df["BA_ABBREV"]==ba]
+        facilities_in_ba = list(facilities_in_ba_df[" Facility ID (ORISPL)"].unique())
+        
+        # aggregate by hour for all facilities with those ORISPLs
+        df = data[yr][st][data[yr][st]["ORISPL_CODE"].isin(facilities_in_ba)]
+        df = df.fillna(0)
+        hrly_agg = df.groupby(['OP_DATE', 'OP_HOUR']).aggregate(np.sum)[['GLOAD (MW)', 'CO2_MASS (tons)']]
+        
+
+        # store
+        to_return[st][ba] = hrly_agg
+          
+    # finish and return              
+    data[yr].pop(st)
+    return to_return
     
 def get_unit_group(yr, st):
     """group by facility name and unit id"""
