@@ -54,6 +54,6 @@ if __name__ == "__main__":
         # write
         if summed is not None:
             summed['BA_ABBREV'] = pd.Series(ba, index=summed.index)
-            summed.to_csv('data/aggregated/%s_%s_aggregate_raw.csv' % (yr, ba),
+            summed.to_csv('data/aggregated_epa/%s_%s_aggregate_raw.csv' % (yr, ba),
                             quoting=csv.QUOTE_NONNUMERIC)
  

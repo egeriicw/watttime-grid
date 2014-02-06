@@ -1,0 +1,88 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\title{The plan for the numbers behind the WattTime business plan}
+\author{Gavin McCormick and Anna Schneider}
+\date{}                                           % Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+The goal is to determine the carbon savings that can be obtained from changes to electricity use patterns. The amount of savings will vary by time, place (i.e., balancing authority), and method of shifting (i.e., which markets the shifting is commensurate with, which markets are informed of the shifting). Key summary statistics are the mean and standard deviation by hour of the day and by month of the year.
+
+\section{Directly calculated measures of carbon intensity}
+For each hour $h$, the most simplistic measure of carbon intensity is
+\begin{equation}
+REI_{a,h} = RE_{a,h} / RL_{a,h}.
+\end{equation}
+$REI_{a,h}$ measures the instantaneou.s carbon intensity of the electricity demanded and generated locally. It does not imply causal relationships between emissions intensity between any two hours.
+
+After adjusting for import/export, this measure of carbon intensity becomes
+\begin{equation}
+EI_{a,h} = E_{a,h} / L_{a,h}.
+\end{equation}
+$EI_{a,h}$ measures the instantaneous carbon intensity of the electricity demanded locally, regardless of generation location.
+
+\section{Predicted measures of carbon intensity}
+
+\section{Appendix: Definitions}
+
+\begin{table}[htdp]
+\caption{Raw variables}
+\begin{center}
+\begin{tabular}{clcc}
+\hline
+variable & explanation & source & units\\
+\hline
+$RL$ & load & balancing authority & MW \\
+$RW$ & wind generation & ISO & MW \\
+$RF$ & fossil generation & EPA & MW \\
+$I_{a \rightarrow b}$ & intertie flow from $a$ to $b$ & ISO or WECC & MW \\
+$RE$ & emissions & EPA & lb CO$_2$ \\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\begin{table}[htdp]
+\caption{Processed variables}
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+name & explanation & equation & units\\
+\hline
+$REI$ & emissions intensity & varies & lb/MW \\
+$F$ & fossil gen adjusted for intertie flow & $F_{a} = RF_{a} + \sum_{b \neq a} \left( I_{b \rightarrow a} - I_{a \rightarrow b} \right)$ & MW \\
+$E$ & emissions adjusted for intertie flow & $E_{a} = RE_{a} + \sum_{b \neq a} \left( I_{b \rightarrow a} REI_{b}- I_{a \rightarrow b} REI_{a} \right)$ & MW \\
+$L$ & load adjusted for intertie flow & $L_{a} = RL_{a} + \sum_{b \neq a} \left( I_{b \rightarrow a} - I_{a \rightarrow b} \right)$ & MW \\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}
+
+\textbf{Question}: $F$ and $L$ both adjusted by same $I$?
+
+\begin{table}[htdp]
+\caption{Modifiers}
+\begin{center}
+\begin{tabular}{cl}
+$x_a$ & value of $x$ in balancing authority (often implicit) \\
+$x_b$ & value of $x$ in other balancing authority (for import/export) \\
+$x_h$ & value of $x$ in hour $h$ \\
+$\hat{x}$ & our prediction for $x$ \\
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}%
+
+\end{document}  
