@@ -16,14 +16,17 @@ This is summarized:
        MY_x_VALUE - NEXT_x_VALUE
        Generates n^2 size data stucture for each variable x.
 
-    3. Find the proportion of expected difference and actual difference for every variable x
-    , for every pair of time units. 
+    3. Find the proportion of expected difference and actual difference for every variable x,
+       for every pair of time units. 
        val1-val2 / E[val1 - val2]
         Combines previous structures into one n^2 size data structure for each variable x.
         
-    4. The time units most similar to eachother are those for which the sum of these proportions for       each variable is minimized.
-       Once the structure is created, we can read off the m most similar days with ease, and then a        different amount after that without recomputing,
-       since ordering the sum of difference proportions created a ranked listing of how similar each unit of time is to every other unit of time. 
+    4. The time units most similar to eachother are those for which the sum of these proportions for
+       each variable is minimized.
+       Once the structure is created, we can read off the m most similar days with ease, and then a
+       different amount after that without recomputing, since ordering the sum of 
+       difference proportions created a ranked listing of how similar each unit of time is to 
+       every other unit of time. 
 
     5. Performs regression and outputs to csv file
 
