@@ -1,0 +1,2 @@
+Regressions for California: change in emissions as function of change in mw,
+Similarity computed in terms of total mw, peak price, avg price, and peak mw variables 

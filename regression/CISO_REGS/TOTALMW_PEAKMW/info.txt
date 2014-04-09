@@ -1,0 +1,2 @@
+Regressions for all balancing authorities:change in emissions as function of change in mw,
+Similarity computed in terms of total mw and peak mw variables
