@@ -117,19 +117,6 @@ def difference_proportions(expected_var_diffs, observed_var_diffs):
         return_dict[authority] = proportions
     return return_dict
 
-def aggregateBAD(prop1, prop2):
-#aggregates multiple difference proportion dicts into a single dictionary
-    return_dict = {}
-    for authority in sorted(prop1.keys()):
-        props = []
-        for index in range(0, 365):
-            orps = []
-            for day in range(0, 365):
-                orps.append((day, (prop1[authority][index][day] + prop2[authority][index][day])/2))
-            props.append(sorted(orps, key=itemgetter(1))) #sorts the list based on proportion
-        return_dict[authority] = props
-    return return_dict
-
 def aggregate(*args):
 #aggregates multiple difference proportion dictionaries into a single dictionary
     return_dict = {}
