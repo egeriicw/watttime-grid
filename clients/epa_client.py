@@ -19,14 +19,14 @@ data = {}
 ######################
 
 # path from ipynb to data
-data_dir = 'data/epa'
+data_dir = '../data/epa'
 
 def download(yr, st, mo):
     """download data from EPA and put in directory structure"""
     # import
     import ftplib
     import zipfile
-    
+
     # set up
     zipfname = '%s%s%s.zip'% (yr, st, mo)
     ftpfpath = 'dmdnload/emissions/hourly/monthly'
@@ -35,7 +35,7 @@ def download(yr, st, mo):
     # open ftp client
     client = ftplib.FTP('ftp.epa.gov')
     client.login()
-    
+
     # if file is on the ftp server...
     if ftpfname in client.nlst(ftpfpath):
         # download
@@ -58,7 +58,7 @@ def download(yr, st, mo):
     # always close the client
     client.close()
     
-def load(yr, st):
+def load(yr, st, data={}):
     """read year and state from csv into data[yr][st]"""
     # add year if it's not there
     if not yr in data.keys():
@@ -73,8 +73,8 @@ def load(yr, st):
         
         for mo in ['%02.f' % i for i in range(1,13)]:
             # set up path
-            csvfname = os.path.join(data_dir, '%s%s%s.csv' % (yr, st, mo))
-            
+            csvfname = os.path.join(data_dir, '%s%s%s.csv' % (yr, st.lower(), mo))
+
             # download file if it doesn't exist
             if not os.access(csvfname, os.F_OK):
                 download(yr, st, mo)
@@ -89,6 +89,9 @@ def load(yr, st):
         df = pd.concat(pieces)
       #  df['OP_DATE'] = pd.to_datetime(df['OP_DATE'])
         data[yr][st] = df
+
+    # return
+    return data
         
 def agg_by_ba(st, yr, facility_df):
     # load data
